@@ -1,3 +1,10 @@
+/*
+1. What is lvalue rvalue
+2. What is the value type (r or l) of a fucnctioncall which returns a reference?
+3. Why we use const type& as funtion argument? 
+4. Can we write a function which only accepts lvalue arguments? Yes using &&
+*/
+
 #include<iostream>
 using namespace std;
 
@@ -16,6 +23,8 @@ int& GetValue(){
 void SetValue(int& x){}
 void SetValue1(const int& x){}
 
+void AcceptLvalueOnly(int&& x){}
+
 int main(){
     int a = GetValue();
     //GetValue1()=9;  <<---- This is wrong as GetValue is returning just a value whih is not a lvalue expr
@@ -32,4 +41,8 @@ int main(){
     int temp = 10; 
     const int& y = temp;
     */
+
+    //AcceptLvalueOnly(x); <<-- This is wrong s argument expects an rvalue
+    AcceptLvalueOnly(10);
+
 }
