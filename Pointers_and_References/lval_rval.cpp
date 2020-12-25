@@ -3,6 +3,7 @@
 2. What is the value type (r or l) of a fucnctioncall which returns a reference?
 3. Why we use const type& as funtion argument? 
 4. Can we write a function which only accepts lvalue arguments? Yes using &&
+5. To learn next: Move semantics
 */
 
 #include<iostream>
