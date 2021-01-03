@@ -6,14 +6,19 @@ To implement fractional knapsack problem:
 */
 
 #include<iostream>
+#include<algorithm>
+#include <chrono>
+
+
 using namespace std;
+using namespace std::chrono; 
 
 struct Item{
     int value;
     int weight;
 
-    bool operator<(const Item& a){
-        if((double)value/weight<(double)a.value/a.weight)
+    bool operator>(const Item& a){
+        if((double)value/weight>(double)a.value/a.weight)
             return true;
         else
             return false;
@@ -33,7 +38,7 @@ void SortArray(T arr[],int n){
     T temp;
     for(int i=0;i<n;i++){
         for(int j=0;j<n-i-1;j++){
-            if(arr[j+1] < arr[j]){
+            if(arr[j+1] > arr[j]){
                 temp=arr[j+1];
                 arr[j+1]=arr[j];
                 arr[j]=temp;
@@ -42,12 +47,22 @@ void SortArray(T arr[],int n){
     }
 }
 
+bool cmp(struct Item a, struct Item b) 
+{ 
+    double r1 = (double)a.value / (double)a.weight; 
+    double r2 = (double)b.value / (double)b.weight; 
+    return r1 > r2; 
+}
+
 double fractionalKnapsack(int W, Item arr[], int n)
 {
     double sum=0;
+    //Sort Using bubblesort
     SortArray(arr,n);
-    for(int i=n-1;i>=0;i--){
-        if(arr[i].weight<W){
+    //sort Using stl sort
+    //sort(arr,arr+n,cmp);
+    for(int i=0;i<n;i++){
+        if(arr[i].weight<=W){
             sum+=arr[i].value;
             W-=arr[i].weight;
         }
@@ -66,6 +81,22 @@ int main(){
         Item{120,30}
     };
 
+    auto start = high_resolution_clock::now(); 
+  
+    // Call the function, here sort() 
     cout<<"Maximum profit : "<< fractionalKnapsack(50, arr, 3)<<endl;
+
+    // Get ending timepoint 
+    auto stop = high_resolution_clock::now(); 
+  
+    // Get duration. Substart timepoints to  
+    // get durarion. To cast it to proper unit 
+    // use duration cast method 
+    auto duration = duration_cast<microseconds>(stop - start); 
+  
+    cout << "Time taken by function: "
+         << duration.count() << " microseconds" << endl; 
+
+   
 }
 
